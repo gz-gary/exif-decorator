@@ -13,6 +13,7 @@ add_executable(exif-decorator
     src/main.cpp
     src/ContentManager.cpp
     src/ExifExtractor.cpp
+    deps/cpp-base64/base64.cpp
 )
 
 # Include directories
@@ -52,6 +53,10 @@ include_directories(${CPPHTTPLIB_DIR})
 # Include json lib
 set(JSONLIB_DIR "${PROJECT_SOURCE_DIR}/deps/json")
 include_directories(${JSONLIB_DIR}/include)
+
+# Include the cpp-base64 lib
+set(CPPBASE64_DIR "${PROJECT_SOURCE_DIR}/deps/cpp-base64")
+include_directories(${CPPBASE64_DIR})
 
 # OS-specific configurations
 if(WIN32)

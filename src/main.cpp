@@ -1,4 +1,6 @@
+#include <base64.h>
 #include <httplib.h>
+
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -33,31 +35,24 @@ int main(void)
     res.set_content(content, "text/javascript");
   });
 
-  svr.Get(R"(/exif-information.json?.*)", [&exif_extractor](const Request& req, Response& res) {
-    std::cerr << "request for json" << std::endl;
-    std::optional<std::string> path{};
-    for (auto param : req.params) {
-      if (param.first == "raw-url") {
-        path = param.second;
-        std::cerr << param.second << std::endl;
-        break;
-      }
-    }
-    if (path.has_value()) {
-      std::string content{};
-      try {
-        content = nlohmann::to_string(exif_extractor.extractFromPath(path.value()));
-      } catch (int status) {
-        if (status == -1) { // file does not exist or is not local
-          res.status = 404;
-          res.set_content("{}", "text/plain");
-        } else {
-          res.set_content(content, "application/json");
-        }
-      }
-    } else {
-      res.status = 404;
-      res.set_content("{}", "text/plain");
+  svr.Post(R"(/upload-raw)", [&exif_extractor](const Request& req, Response& res) {
+    try {
+        nlohmann::json json_req = nlohmann::json::parse(req.body),
+                       json_res;
+        std::string base64data = json_req["file"].get<std::string>(); // Get the raw string value
+        std::string str_buffer = base64_decode(base64data);
+
+        json_res = exif_extractor.extractFromBuffer(
+          str_buffer.data(),
+          str_buffer.size()
+        );
+
+        std::string content{json_res.dump()};
+        res.set_content(content, "application/json");
+    } catch (const std::exception& e) {
+        std::cerr << "Exception: " << e.what() << std::endl;
+        // Handle the exception and set an appropriate response
+        res.set_content("{\"error\": \"Internal Server Error\"}", "application/json");
     }
   });
 

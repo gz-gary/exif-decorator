@@ -5,6 +5,7 @@
 class ExifExtractor {
 public:
     nlohmann::json extractFromPath(const std::string& path);
+    nlohmann::json extractFromBuffer(const void* buffer, size_t size);
 
 private:
     std::string parseISO(float iso) const;
@@ -13,4 +14,5 @@ private:
     std::string parseFocalLength(float focal) const;
 
     LibRaw iProcessor;
+    nlohmann::json extractFromiProcessor();
 };
