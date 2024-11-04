@@ -17,8 +17,13 @@ add_executable(exif-decorator
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
 # Set OpenSSL paths
-set(OPENSSL_INCLUDE_DIR "C:/Program Files/FireDaemon OpenSSL 3/include")
-set(OPENSSL_LIB_DIR "C:/Program Files/FireDaemon OpenSSL 3/lib")
+if(WIN32)
+    set(OPENSSL_INCLUDE_DIR "C:/Program Files/FireDaemon OpenSSL 3/include")
+    set(OPENSSL_LIB_DIR "C:/Program Files/FireDaemon OpenSSL 3/lib")
+elseif(UNIX)
+    set(OPENSSL_INCLUDE_DIR "/usr/local/opt/openssl/include")
+    set(OPENSSL_LIB_DIR "/usr/local/opt/openssl/lib")
+endif()
 
 # Include OpenSSL directories
 include_directories(${OPENSSL_INCLUDE_DIR})
@@ -30,6 +35,16 @@ target_link_libraries(exif-decorator
 )
 
 # Include cpp-httplib
-set(CPPHTTPLIB_DIR "./deps/cpp-httplib")
-
+set(CPPHTTPLIB_DIR "${PROJECT_SOURCE_DIR}/deps/cpp-httplib")
 include_directories(${CPPHTTPLIB_DIR})
+
+# OS-specific configurations
+if(WIN32)
+    # Windows-specific configurations
+    message(STATUS "Configuring for Windows")
+    # Add any Windows-specific configurations here
+elseif(UNIX)
+    # Unix-specific configurations
+    message(STATUS "Configuring for Unix")
+    # Add any Unix-specific configurations here
+endif()
