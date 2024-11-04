@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const button1 = document.getElementById('button1');
     const button2 = document.getElementById('button2');
     const button3 = document.getElementById('button3');
+    const caption1 = document.getElementById('caption1');
+    const caption2 = document.getElementById('caption2');
     const fileInput = document.getElementById('fileInput');
     const fileOutput = document.getElementById('fileOutput');
     const leftDiv = document.getElementById('leftDiv');
@@ -54,6 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(response => response.json())  
                 .then(data => {
                     console.log('success:', data);
+                    caption1.innerText = `${data['make']} ${data['model']}`;
+                    caption2.innerText = `${data['focal length']}mm ISO${data['ISO sensivity']} f/${data['aperture']} ${data['shutter speed']}`
+                    // console.log(data['aperture']);
                     // Hide the loading popup
                     document.getElementById('loadingPopup').style.display = 'none';
                 })  
