@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const button1 = document.getElementById('button1');
     const button2 = document.getElementById('button2');
+    const button3 = document.getElementById('button3');
     const fileInput = document.getElementById('fileInput');
     const fileOutput = document.getElementById('fileOutput');
     const leftDiv = document.getElementById('leftDiv');
@@ -64,5 +65,27 @@ document.addEventListener('DOMContentLoaded', () => {
             }; 
             reader.readAsDataURL(file);
         }
+    });
+
+    // Button 3: Save leftDiv as image using dom-to-image
+    button3.addEventListener('click', () => {
+        const leftDiv = document.getElementById('leftDiv');
+        
+        // Show the loading popup
+        document.getElementById('loadingPopup').style.display = 'flex';
+
+        domtoimage.toPng(leftDiv)
+            .then(function (dataUrl) {  
+                // 创建一个链接并下载图片  
+                const link = document.createElement('a');  
+                link.download = 'screenshot.png'; // 指定下载的文件名  
+                link.href = dataUrl;  
+                link.click(); // 自动点击链接以触发下载  
+                document.getElementById('loadingPopup').style.display = 'none';
+            })  
+            .catch(function (error) {  
+                console.error('oops, something went wrong!', error);  
+                document.getElementById('loadingPopup').style.display = 'none';
+            });
     });
 });

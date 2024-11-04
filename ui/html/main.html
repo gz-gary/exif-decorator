@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Split Page</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- Include dom-to-image from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js" defer></script>
+    <!-- Include FileSaver.js from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js" defer></script>
+    <script src="https://github.com/cyan33/image-screenshot/blob/master/src/image-screenshot.js" defer></script>
     <script src="PhotoSelector.js" defer></script>
 </head>
 <body>
@@ -17,7 +22,7 @@
         <div class="right">
             <button class="button" id="button1">Button 1</button>
             <button class="button" id="button2">Button 2</button>
-            <button class="button">Button 3</button>
+            <button class="button" id="button3">Button 3</button>
             <input type="file" id="fileInput" style="display: none;">
             <input type="file" id="fileOutput" style="display: none;">
         </div>
