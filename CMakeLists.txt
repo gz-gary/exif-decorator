@@ -16,5 +16,20 @@ add_executable(exif-decorator
 # Include directories
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
-# Link libraries
-# target_link_libraries(MyProject <library_name>)
+# Set OpenSSL paths
+set(OPENSSL_INCLUDE_DIR "C:/Program Files/FireDaemon OpenSSL 3/include")
+set(OPENSSL_LIB_DIR "C:/Program Files/FireDaemon OpenSSL 3/lib")
+
+# Include OpenSSL directories
+include_directories(${OPENSSL_INCLUDE_DIR})
+
+# Link OpenSSL libraries
+target_link_libraries(exif-decorator 
+    ${OPENSSL_LIB_DIR}/libssl.lib 
+    ${OPENSSL_LIB_DIR}/libcrypto.lib
+)
+
+# Include cpp-httplib
+set(CPPHTTPLIB_DIR "./deps/cpp-httplib")
+
+include_directories(${CPPHTTPLIB_DIR})
