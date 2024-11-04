@@ -12,6 +12,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_executable(exif-decorator 
     src/main.cpp
     src/ContentManager.cpp
+    src/ExifExtractor.cpp
 )
 
 # Include directories
@@ -35,9 +36,22 @@ target_link_libraries(exif-decorator
     ${OPENSSL_LIB_DIR}/libcrypto.lib
 )
 
+# Include and link libraw
+set(LIBRAW_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/deps/LibRaw")
+set(LIBRAW_LIB_DIR "${PROJECT_SOURCE_DIR}/deps/LibRaw/lib")
+include_directories(${LIBRAW_INCLUDE_DIR})
+
+target_link_libraries(exif-decorator
+    ${LIBRAW_LIB_DIR}/libraw.lib
+)
+
 # Include cpp-httplib
 set(CPPHTTPLIB_DIR "${PROJECT_SOURCE_DIR}/deps/cpp-httplib")
 include_directories(${CPPHTTPLIB_DIR})
+
+# Include json lib
+set(JSONLIB_DIR "${PROJECT_SOURCE_DIR}/deps/json")
+include_directories(${JSONLIB_DIR}/include)
 
 # OS-specific configurations
 if(WIN32)
