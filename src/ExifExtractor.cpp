@@ -1,17 +1,18 @@
 #include "ExifExtractor.hpp"
-#include <libraw/libraw.h>
 #include <string>
 #include <sstream>
 #include <iostream>
 #include <iomanip> // Include the iomanip header for setprecision
 using nlohmann::json;
 
-json ExifExtractor::extractFromPath(const std::string &path) const
+json ExifExtractor::extractFromPath(const std::string &path)
 {
     json result{};
 
-    LibRaw iProcessor;
-    iProcessor.open_file(path.c_str());
+    if (iProcessor.open_file(path.c_str())) {
+        throw -1;
+    }
+
     libraw_iparams_t iparam = iProcessor.imgdata.idata;
     libraw_imgother_t iother = iProcessor.imgdata.other;
 
@@ -21,6 +22,8 @@ json ExifExtractor::extractFromPath(const std::string &path) const
     result["aperture"] = parseAperture(iother.aperture);
     result["shutter speed"] = parseShutterSpeed(iother.shutter);
     result["focal length"] = parseFocalLength(iother.focal_len);
+
+    iProcessor.recycle();
 
     return result;
 }
