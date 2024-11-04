@@ -11,6 +11,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # Add the executable
 add_executable(exif-decorator 
     src/main.cpp
+    src/ContentManager.cpp
 )
 
 # Include directories
