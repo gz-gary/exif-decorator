@@ -6,7 +6,6 @@
 
 #include "ContentManager.hpp"
 
-
 int main(void)
 {
   using namespace httplib;
@@ -23,6 +22,11 @@ int main(void)
   svr.Get(R"(/.*\.css)", [&content_manager](const Request& req, Response& res) {
     std::string content = content_manager.getStylesheet(req.matches[0].str());
     res.set_content(content, "text/css");
+  });
+
+  svr.Get(R"(/.*\.js)", [&content_manager](const Request& req, Response& res) {
+    std::string content = content_manager.getScript(req.matches[0].str());
+    res.set_content(content, "text/javascript");
   });
 
   svr.listen("localhost", 1234);
