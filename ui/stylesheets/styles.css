@@ -65,3 +65,38 @@ body, html {
 .button:hover {
     background-color: #0056b3;
 }
+
+/* Popup Container */
+.popup {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed position to cover the entire viewport */
+    z-index: 9999; /* Ensure it's on top of other elements */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+    
+    /* Flexbox for centering */
+    align-items: center;
+    justify-content: center;
+}
+
+/* Loader Animation */
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey border */
+    border-top: 16px solid #3498db; /* Blue border on top */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite; /* Spin animation */
+
+    /* Optional: Add a shadow for better visibility */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Keyframes for Spin Animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

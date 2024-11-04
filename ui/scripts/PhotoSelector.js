@@ -39,6 +39,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const reader = new FileReader();
             reader.onloadend = function() {  
                 const base64data = reader.result.split(',')[1]; // Extract base64 data
+                
+                // Show the loading popup
+                document.getElementById('loadingPopup').style.display = 'flex'; // Use 'flex' to activate Flexbox
+
                 fetch('/upload-raw', {  
                     method: 'POST',  
                     headers: {  
@@ -47,8 +51,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     body: JSON.stringify({ file: base64data }) // Send only the base64 data to the backend  
                 })  
                 .then(response => response.json())  
-                .then(data => console.log('success:', data))  
-                .catch(error => console.error('fail:', error));  
+                .then(data => {
+                    console.log('success:', data);
+                    // Hide the loading popup
+                    document.getElementById('loadingPopup').style.display = 'none';
+                })  
+                .catch(error => {
+                    console.error('fail:', error);
+                    // Hide the loading popup
+                    document.getElementById('loadingPopup').style.display = 'none';
+                });  
             }; 
             reader.readAsDataURL(file);
         }
