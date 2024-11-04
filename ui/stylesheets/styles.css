@@ -11,9 +11,34 @@ body, html {
 
 .left {
     flex: 3;
-    background-size: cover; /* Ensure the image covers the entire area */
-    background-position: center; /* Center the image */
-    padding: 20px;
+    position: relative; /* Establish a positioning context */
+    padding: 45px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Contain the absolute elements */
+}
+
+#backgroundPhoto {
+    position: absolute; /* Remove from normal flow */
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+    object-fit: cover; /* Ensure the image covers the container */
+    z-index: -1; /* Place it behind other elements */
+    filter: blur(8px); /* Apply blur effect */
+    -webkit-filter: blur(8px); /* For Safari compatibility */
+}
+
+#framedPhoto {
+    border: none;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    max-width: 100%;
+    height: auto;
+    z-index: 1; /* Ensure it stays above the backgroundPhoto */
 }
 
 .right {
@@ -34,7 +59,7 @@ body, html {
     border: none;
     cursor: pointer;
     border-radius: 5px;
-    transition: background-color 0.3s ease; /* Add transition for background color */
+    transition: background-color 0.3s ease; /* Smooth color transition */
 }
 
 .button:hover {
